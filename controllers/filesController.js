@@ -16,7 +16,7 @@ export const createFile = async (req, res, next) => {
   }
 };
 
-export const getFile = async (req, res, next) => {
+export const getFiles = async (req, res, next) => {
   try {
     const folderContent = await fs.readdir(FOLDER_PATH);
     if (folderContent.length === 0) {
@@ -25,5 +25,21 @@ export const getFile = async (req, res, next) => {
     res.json(folderContent);
   } catch (e) {
     next(e);
+  }
+};
+
+export const getFile = async (req, res, next) => {
+  try {
+    const folderContent = await fs.readdir(FOLDER_PATH);
+
+    if (!folderContent.find(item => item === req.params.filename)) {
+      throw HttpError(404, "The file doen't find");
+    }
+
+    const filePath = path.resolve("./file", req.params.filename);
+    const content = await fs.readFile(filePath, "utf-8");
+    res.json({ content });
+  } catch (error) {
+    next(error);
   }
 };
