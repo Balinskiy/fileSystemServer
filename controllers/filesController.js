@@ -36,8 +36,8 @@ export const getFile = async (req, res, next) => {
       throw HttpError(404, "The file doen't find");
     }
 
-    const filePath = path.resolve("./file", req.params.filename);
-    const content = await fs.readFile(filePath, "utf-8");
+    const filePath = path.resolve("../files", req.params.filename);
+    const content = await fs.readfile(filePath, "utf-8");
     res.json({ content });
   } catch (error) {
     next(error);
