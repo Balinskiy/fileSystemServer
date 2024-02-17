@@ -1,4 +1,4 @@
-import { HttpError } from "../helpers/HttpError";
+import HttpError from "../helpers/HttpError.js";
 
 export const checkExtension = (req, res, next) => {
   const EXTENSIONS = ["txt", "pdf", "mp4", "doc", "js"];

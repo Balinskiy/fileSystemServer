@@ -1,8 +1,8 @@
 import express from "express";
-import { createFile } from "../controllers/filesController";
-import { validateBody } from "../helpers/validateBody";
-import { createFileSchema } from "../schemas/filesSchemas";
-import { checkExtension } from "../middleWares/checkExtension";
+import { createFile, getFile } from "../controllers/filesController.js";
+import validateBody from "../helpers/validateBody.js";
+import { createFileSchema } from "../schemas/filesSchemas.js";
+import { checkExtension } from "../middleWares/checkExtension.js";
 
 const filesRouter = express.Router();
 
@@ -12,5 +12,7 @@ filesRouter.post(
   checkExtension,
   createFile
 );
+
+filesRouter.get("/", getFile);
 
 export default filesRouter;
