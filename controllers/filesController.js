@@ -2,6 +2,9 @@ import fs from "fs/promises";
 import path from "path";
 import HttpError from "../helpers/HttpError.js";
 
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
 const FOLDER_PATH = path.resolve("./files");
 
 export const createFile = async (req, res, next) => {
@@ -32,12 +35,13 @@ export const getFile = async (req, res, next) => {
   try {
     const folderContent = await fs.readdir(FOLDER_PATH);
 
-    if (!folderContent.find(item => item === req.params.filename)) {
+    if (!folderContent.find(item => item === req.params.fileName)) {
       throw HttpError(404, "The file doen't find");
     }
 
-    const filePath = path.resolve("../files", req.params.filename);
-    const content = await fs.readfile(filePath, "utf-8");
+    const filePath = path.resolve("./files", req.params.fileName);
+
+    const content = await fs.readFile(filePath, "utf-8");
     res.json({ content });
   } catch (error) {
     next(error);
